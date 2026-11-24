@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sourav — Performance Marketing Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0C1512;
+    --ink-2: #12201A;
+    --paper: #F5F2E7;
+    --paper-dim: #E8E3D3;
+    --text-light: #EAE6D8;
+    --text-dim: #93A79C;
+    --text-dark: #142019;
+    --text-dark-dim: #55625A;
+    --green: #2E7D5B;
+    --green-bright: #4FAE81;
+    --rust: #B85A2A;
+    --line-dark: #223229;
+    --line-light: #D8D1BC;
+    --radius-sm: 3px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; margin: 0; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  a { color: inherit; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(12,21,18,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto; padding: 16px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-name { font-family: 'Fraunces', serif; font-size: 1.15rem; letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--text-dim); }
+  .nav-links a { text-decoration: none; transition: color .15s; }
+  .nav-links a:hover { color: var(--green-bright); }
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
+    border: 1px solid var(--line-dark); padding: 7px 13px; border-radius: var(--radius-sm);
+    text-decoration: none; color: var(--text-light); white-space: nowrap;
+  }
+  .nav-mobile-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 76px 0 40px; }
+  .hero-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--green-bright); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.02; color: var(--paper); }
+  .hero p.role {
+    font-size: 1.15rem; color: var(--text-dim); max-width: 520px; margin-top: 18px;
+  }
+  .hero-contact { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--text-dim); }
+  .hero-contact a { text-decoration: none; }
+  .hero-contact a:hover { color: var(--green-bright); }
+
+  /* stat ledger */
+  .stat-ledger { margin-top: 48px; border-top: 1px solid var(--line-dark); }
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 18px 0; border-bottom: 1px solid var(--line-dark);
+  }
+  .stat-row .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; color: var(--text-dim); }
+  .stat-row .value {
+    font-family: 'IBM Plex Mono', monospace; font-size: 1.5rem; font-weight: 600; color: var(--paper);
+  }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green-bright); margin-right:9px; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding: 70px 0; border-bottom: 1px solid var(--line-dark); }
+  section.paper { background: var(--paper); color: var(--text-dark); border-bottom: none; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 36px; gap: 20px; flex-wrap: wrap; }
+  .section-head h2 { font-size: 1.9rem; }
+  .paper .section-head h2 { color: var(--text-dark); }
+  section:not(.paper) .section-head h2 { color: var(--paper); }
+  .section-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--text-dim); }
+  .paper .section-num { color: var(--text-dark-dim); }
+
+  /* ---------- ABOUT ---------- */
+  .about-text { max-width: 620px; font-size: 1.05rem; }
+  .about-text p { margin: 0 0 18px; }
+
+  /* ---------- CASE STUDIES ---------- */
+  .case {
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius-sm);
+    padding: 28px 26px;
+    margin-bottom: 24px;
+    background: var(--ink-2);
+  }
+  .case-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 6px; flex-wrap: wrap; }
+  .case-head h3 { font-size: 1.4rem; color: var(--paper); }
+  .case-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--green-bright); border: 1px solid var(--green); padding: 4px 9px; border-radius: var(--radius-sm); white-space: nowrap; }
+  .case-obj { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 22px; }
+
+  .metric-table { width: 100%; border-collapse: collapse; }
+  .metric-table th {
+    text-align: left; font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 0.75rem;
+    color: var(--text-dim); padding-bottom: 8px; border-bottom: 1px solid var(--line-dark);
+  }
+  .metric-table th:not(:first-child), .metric-table td:not(:first-child) { text-align: right; }
+  .metric-table td { padding: 11px 0; border-bottom: 1px solid var(--line-dark); font-size: 0.92rem; }
+  .metric-table tr:last-child td { border-bottom: none; }
+  .metric-table td.campaign { display: flex; align-items: center; }
+  .metric-table td.num { font-family: 'IBM Plex Mono', monospace; color: var(--paper); }
+
+  .case-takeaway { margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line-dark); font-size: 0.95rem; color: var(--text-light); }
+  .case-takeaway span { color: var(--green-bright); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; display: block; margin-bottom: 6px; }
+
+  .case-channels { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; }
+  .case-channels span { color: var(--text-dim); }
+  .case-channels a { color: var(--green-bright); text-decoration: none; border-bottom: 1px solid var(--line-dark); padding-bottom: 1px; }
+  .case-channels a:hover { border-color: var(--green-bright); }
+
+  /* ---------- EXPERIENCE ---------- */
+  .job { display: grid; grid-template-columns: 130px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line-light); }
+  .job:last-child { border-bottom: none; }
+  .job .dates { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--text-dark-dim); padding-top: 4px; }
+  .job h3 { font-size: 1.2rem; color: var(--text-dark); margin-bottom: 3px; }
+  .job .company { font-size: 0.92rem; color: var(--green); margin-bottom: 12px; font-style: italic; font-family: 'Fraunces', serif; }
+  .job ul { margin: 0; padding-left: 18px; }
+  .job li { margin-bottom: 7px; font-size: 0.96rem; }
+
+  /* ---------- SKILLS ---------- */
+  .skill-group { padding: 20px 0; border-bottom: 1px solid var(--line-dark); display: grid; grid-template-columns: 180px 1fr; gap: 20px; }
+  .skill-group:last-child { border-bottom: none; }
+  .skill-group .cat { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--green-bright); }
+  .skill-group .items { color: var(--text-light); font-size: 0.95rem; line-height: 1.8; }
+
+  /* ---------- EDU / CERTS ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .edu-row { margin-bottom: 22px; }
+  .edu-row h3 { font-size: 1.1rem; margin-bottom: 3px; }
+  .edu-row .meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px; }
+  .cert-list { list-style: none; margin: 0; padding: 0; }
+  .cert-list li { padding: 12px 0; border-bottom: 1px solid var(--line-dark); font-size: 0.95rem; display: flex; align-items: center; }
+
+  /* ---------- ACHIEVEMENTS ---------- */
+  .achv-row { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line-light); }
+  .achv-row:last-child { border-bottom: none; }
+  .achv-num { font-family: 'IBM Plex Mono', monospace; font-size: 1.6rem; color: var(--green); min-width: 90px; }
+  .achv-body h3 { font-size: 1.05rem; color: var(--text-dark); margin-bottom: 4px; }
+  .achv-body p { margin: 0; font-size: 0.92rem; color: var(--text-dark-dim); }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 60px 0 44px; }
+  footer h2 { color: var(--paper); font-size: 2.1rem; margin-bottom: 14px; }
+  footer .sub { color: var(--text-dim); max-width: 460px; margin-bottom: 34px; }
+  .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 40px; }
+  .contact-item { border-bottom: 1px solid var(--line-dark); padding-bottom: 14px; }
+  .contact-item .k { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; }
+  .contact-item .v { font-size: 1.02rem; text-decoration: none; }
+  .contact-item .v.placeholder { color: var(--text-dim); font-style: italic; border-bottom: 1px dashed var(--line-dark); padding-bottom: 2px; }
+  footer .foot-note { margin-top: 48px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--text-dim); }
+
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .job { grid-template-columns: 1fr; gap: 6px; }
+    .skill-group { grid-template-columns: 1fr; gap: 8px; }
+    .two-col { grid-template-columns: 1fr; gap: 8px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .case-head { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-name">Sourav</div>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="mailto:sourav.hotelier11@gmail.com">Email</a>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <div class="hero-eyebrow">Performance marketing specialist</div>
+  <h1>Sourav</h1>
+  <p class="role">I run Google Ads and Meta Ads campaigns end to end — targeting, budgets, creative testing, and the weekly grind of reading the numbers closely enough to know which lever to pull next.</p>
+  <div class="hero-contact">
+    <a href="mailto:sourav.hotelier11@gmail.com">sourav.hotelier11@gmail.com</a>
+    <a href="tel:+918744052951">+91 87440 52951</a>
+    <span>Gurgaon, India</span>
+    <a href="https://www.linkedin.com/in/sourav-niveriya-240b43169/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+
+  <div class="stat-ledger mono">
+    <div class="stat-row">
+      <div class="label"><span class="dot"></span>Monthly ad spend managed</div>
+      <div class="value" id="stat1">₹0</div>
+    </div>
+    <div class="stat-row">
+      <div class="label"><span class="dot"></span>Instagram growth, one client, 6 months</div>
+      <div class="value" id="stat2">0 → 0</div>
+    </div>
+    <div class="stat-row">
+      <div class="label"><span class="dot"></span>Years in performance marketing</div>
+      <div class="value" id="stat3">0</div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>About</h2>
+      <div class="section-num">01</div>
+    </div>
+    <div class="about-text">
+      <p>I plan and run Google Ads and Meta Ads campaigns for healthcare, education, and D2C clients, currently managing upwards of ₹5,00,000 in monthly spend at Vidyanta Skill Institute. Most of my week goes into audience targeting, budget allocation, creative testing, and tracking CPL, CTR, and ROAS closely enough to catch a dip before it costs a client money.</p>
+      <p>Before marketing, I spent three years in hospitality — behind the counter at Pret A Manger and on the floor at Taj Hotels. That work taught me how to read people and stay steady under pressure, which turned out to be good training for client accounts and stakeholder conversations.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Recent work</h2>
+      <div class="section-num">02</div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>Vidyanta Skill Institute</h3>
+        <div class="case-tag">Healthcare & education</div>
+      </div>
+      <div class="case-obj">Lead generation for clinical certification courses, run on Meta Ads.</div>
+      <table class="metric-table">
+        <tr><th>Campaign</th><th>Conversations</th><th>Cost / conversation</th><th>Spent</th></tr>
+        <tr><td class="campaign"><span class="dot"></span>AHA BLS & ACLS Provider Course</td><td class="num">128</td><td class="num">₹30.94</td><td class="num">₹3,960</td></tr>
+        <tr><td class="campaign"><span class="dot"></span>Infection Prevention & Control Nurse (IPCN)</td><td class="num">99</td><td class="num">₹13.56</td><td class="num">₹1,343</td></tr>
+        <tr><td class="campaign"><span class="dot"></span>Sales job campaign</td><td class="num">62</td><td class="num">₹9.62</td><td class="num">₹596</td></tr>
+      </table>
+      <div class="case-takeaway"><span>Result</span>Kept cost per lead conversation under ₹31 across every active course campaign, with the strongest ad landing at ₹9.62 per conversation.</div>
+      <div class="case-channels">
+        <span>Channels I manage</span>
+        <a href="https://vidyanta.com/" target="_blank" rel="noopener">Website</a>
+        <a href="https://www.instagram.com/vidyantasimulation/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/channel/UCjoDWSCPJ4Wb91n3L9JJ8ig" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.facebook.com/VidyantaSimulation" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.linkedin.com/school/vidyanta-skills-institute-pvt-ltd/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>healingjourney</h3>
+        <div class="case-tag">Wellness</div>
+      </div>
+      <div class="case-obj">Instagram traffic and engagement for a wellness brand's page.</div>
+      <table class="metric-table">
+        <tr><th>Campaign</th><th>Result</th><th>Cost / result</th><th>Spent</th></tr>
+        <tr><td class="campaign"><span class="dot"></span>Profile visit campaign</td><td class="num">178 visits</td><td class="num">₹0.78</td><td class="num">₹138</td></tr>
+        <tr><td class="campaign"><span class="dot"></span>Video views campaign</td><td class="num">30 conv.</td><td class="num">₹23.40</td><td class="num">₹702</td></tr>
+      </table>
+      <div class="case-takeaway"><span>Result</span>Profile-visit traffic came in under ₹1 per visit — a cheap way to build an audience before pushing conversion campaigns to it.</div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>Core Supplement</h3>
+        <div class="case-tag">D2C</div>
+      </div>
+      <div class="case-obj">Awareness and traffic campaigns for a supplements brand's Instagram.</div>
+      <table class="metric-table">
+        <tr><th>Campaign</th><th>Result</th><th>Cost / result</th><th>Spent</th></tr>
+        <tr><td class="campaign"><span class="dot"></span>Traffic campaign</td><td class="num">521 visits</td><td class="num">₹0.60</td><td class="num">₹313</td></tr>
+        <tr><td class="campaign"><span class="dot"></span>Awareness campaign</td><td class="num">16,083 reached</td><td class="num">₹2.16 /1k</td><td class="num">₹35</td></tr>
+        <tr><td class="campaign"><span class="dot"></span>Biozyme Sale engagement</td><td class="num">17 conv.</td><td class="num">₹6.37</td><td class="num">₹108</td></tr>
+      </table>
+      <div class="case-takeaway"><span>Result</span>Low-cost traffic and awareness campaigns built a wide, cheap top of funnel ahead of the conversion-focused ads.</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience" class="paper">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <div class="section-num">03</div>
+    </div>
+
+    <div class="job">
+      <div class="dates">Jun 2025 – Present</div>
+      <div>
+        <h3>Senior Digital Marketing Executive</h3>
+        <div class="company">Vidyanta Skill Institute</div>
+        <ul>
+          <li>Lead performance marketing for healthcare and education clients — Google Ads and Meta Ads for lead generation and admissions.</li>
+          <li>Own campaign budgets, audience targeting, remarketing, and conversion optimization end to end.</li>
+          <li>Run A/B tests on creatives, landing pages, and ad copy; track CPL, CTR, ROAS, and conversion rate weekly.</li>
+          <li>Grew a client's Instagram following from 500 to 15,000+ in 6 months through a reels and engagement strategy.</li>
+          <li>Support SEO and keyword planning alongside paid media, plus YouTube thumbnail and retention optimization.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="dates">Apr 2025 – Jun 2025</div>
+      <div>
+        <h3>Digital Marketing Executive</h3>
+        <div class="company">Advertis India</div>
+        <ul>
+          <li>Managed multi-platform ad campaigns with monthly spend exceeding ₹5,00,000.</li>
+          <li>Optimized bidding strategy and budget allocation based on audience-level performance.</li>
+          <li>Partnered with design and content teams on creatives for lead generation and brand awareness.</li>
+          <li>Delivered weekly performance reports with optimization recommendations to stakeholders.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="dates">Jan 2025 – Apr 2025</div>
+      <div>
+        <h3>Digital Marketing Intern</h3>
+        <div class="company">Vidyanta Skill Institute</div>
+        <ul>
+          <li>Executed Google Ads and Meta Ads campaigns under senior guidance; ran SEO keyword research and on-page optimization.</li>
+          <li>Supported social media campaign management and built out analytics reporting.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="dates">Aug 2023 – Dec 2024</div>
+      <div>
+        <h3>Senior Barista</h3>
+        <div class="company">Pret A Manger — Reliance Brands Ltd.</div>
+        <ul>
+          <li>Delivered customer service in a high-volume hospitality environment; managed billing and upselling.</li>
+          <li>Built client-handling and communication skills later applied to marketing account work.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="dates">Mar 2022 – Aug 2022</div>
+      <div>
+        <h3>Guest Service Associate (F&B)</h3>
+        <div class="company">Taj City Centre — Gurugram</div>
+        <ul>
+          <li>Handled guest relations and multi-table F&B service in a luxury hospitality setting, managing bar operations.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <div class="section-num">04</div>
+    </div>
+    <div>
+      <div class="skill-group">
+        <div class="cat">Paid media</div>
+        <div class="items">Google Ads, Meta Ads, Paid Media Campaign Strategy</div>
+      </div>
+      <div class="skill-group">
+        <div class="cat">Analytics & optimization</div>
+        <div class="items">Campaign Optimization, ROAS Improvement, Conversion Tracking, A/B Testing, Google Analytics, Meta Business Suite, ROI Analysis, Performance Reporting</div>
+      </div>
+      <div class="skill-group">
+        <div class="cat">SEO & content</div>
+        <div class="items">On-Page SEO, Keyword Research, Landing Page Strategy, Ad Copywriting, Canva</div>
+      </div>
+      <div class="skill-group">
+        <div class="cat">Strategy</div>
+        <div class="items">Audience Retargeting, Audience Segmentation, Social Media Strategy, Conversion Optimization</div>
+      </div>
+      <div class="skill-group">
+        <div class="cat">Tools</div>
+        <div class="items">Google Tag Manager, Google Sheets / Excel, Meta Ads Manager, Google Ads Manager</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="paper">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Education & achievements</h2>
+      <div class="section-num">05</div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="edu-row">
+          <h3>Master's in Digital Marketing</h3>
+          <div class="meta">SkillCircle Institute · Sep 2024 – Apr 2025</div>
+          <div>Specialized in SEO, Paid Media, Analytics, Google Ads, and Meta Ads.</div>
+        </div>
+        <div class="edu-row">
+          <h3>Bachelor's in Hotel Management</h3>
+          <div class="meta">Starex University, Gurugram · Jan 2018 – Jan 2022 · GPA 6.39</div>
+          <div>Specialized in hospitality operations and customer service management.</div>
+        </div>
+        <ul class="cert-list">
+          <li><span class="dot"></span>Google Ads & Meta Ads Campaign Management</li>
+          <li><span class="dot"></span>Google Analytics</li>
+          <li><span class="dot"></span>SEO & Performance Marketing</li>
+          <li><span class="dot"></span>Canva & Social Media Marketing</li>
+        </ul>
+      </div>
+      <div>
+        <div class="achv-row">
+          <div class="achv-num">30x</div>
+          <div class="achv-body">
+            <h3>Instagram growth</h3>
+            <p>Grew a client's page from 500 to 15,000+ followers in 6 months through reels strategy and audience engagement.</p>
+          </div>
+        </div>
+        <div class="achv-row">
+          <div class="achv-num">↑</div>
+          <div class="achv-body">
+            <h3>YouTube channel growth</h3>
+            <p>Contributed via SEO-focused content planning, thumbnail optimization, and retention strategy.</p>
+          </div>
+        </div>
+        <div class="achv-row">
+          <div class="achv-num">3</div>
+          <div class="achv-body">
+            <h3>Platforms grown</h3>
+            <p>Improved visibility and engagement across Instagram, YouTube, and other social platforms through consistent execution.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk about your campaigns.</h2>
+    <div class="sub">Open to performance marketing roles and freelance campaign work across Google Ads, Meta Ads, and SEO.</div>
+    <div class="contact-grid mono">
+      <div class="contact-item">
+        <div class="k">Email</div>
+        <a class="v" href="mailto:sourav.hotelier11@gmail.com">sourav.hotelier11@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="k">Phone</div>
+        <a class="v" href="tel:+918744052951">+91 87440 52951</a>
+      </div>
+      <div class="contact-item">
+        <div class="k">Location</div>
+        <span class="v">Gurgaon, India</span>
+      </div>
+      <div class="contact-item">
+        <div class="k">LinkedIn</div>
+        <a class="v" href="https://www.linkedin.com/in/sourav-niveriya-240b43169/" target="_blank" rel="noopener">in/sourav-niveriya</a>
+      </div>
+    </div>
+    <div class="foot-note">Sourav — Performance Marketing Specialist</div>
+  </div>
+</footer>
+
+<script>
+  function countUp(el, end, format, duration) {
+    const start = performance.now();
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = format(eased * end);
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    countUp(document.getElementById('stat1'), 500000, v => '₹' + Math.round(v).toLocaleString('en-IN') + '+', 1100);
+    countUp(document.getElementById('stat3'), 1.5, v => v.toFixed(1), 900);
+    const s2 = document.getElementById('stat2');
+    countUp({ set textContent(v) { s2.textContent = '500 → ' + Math.round(v).toLocaleString('en-IN') + '+'; } }, 15000, v => v, 1300);
+  });
+</script>
+
+</body>
+</html>
